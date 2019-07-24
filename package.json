@@ -1,0 +1,40 @@
+{
+  "name": "nodejs-cookbook",
+  "version": "0.1.0",
+  "description": "A cookbook for getting started with node.js fast!",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "start-stub-nonmod": "nodemon --exec babel-node src/index.stubbed-model-non-modular-routes.js",
+    "start-stub-mod": "nodemon --exec babel-node src/index.stubbed-model-modular-routes.js",    
+    "prod-start": "node src/index.js",
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "test": "jest"
+  },
+  "author": "me",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "eslint": "^6.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "js-logger": "^1.6.0",
+    "mongoose": "^5.6.6",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "uuid": "^3.3.2"
+  }
+}
