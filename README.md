@@ -1,7 +1,8 @@
 # Node.js Cookbook
 
 ## What is this?
-A cookbook for getting started with node.js development fast!
+A cookbook for getting started with node.js development fast! It's based on the excellent 
+[tutorials](https://www.robinwieruch.de/mongodb-express-node-rest-api/) written by Robin Wieruch.
 
 If you're a Java developer and want to start developing with node.js, you've come to the right place... maybe. ;-)
 
@@ -116,9 +117,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 ##### Router-level middleware
 Runs only for a specific route.
 
-TODO: Include example.
+TODO: Include example...
 
-### Evnironment Variables
+### Environment Variables
 Use dotenv to access them. Store your env vars in a `.env` file in project root folder.
 
 `npm install dotenv`
@@ -174,4 +175,4 @@ Use [Postman](https://www.getpostman.com/).
 1. HCL (HashiCorp Language support for Vault config)
 
 ## References
-1. https://www.robinwieruch.de/minimal-node-js-babel-setup - a great series of tutorials for getting started with node.js, express, and MongoDB integration.
+1. https://www.robinwieruch.de/mongodb-express-node-rest-api - a great series of tutorials for getting started with node.js, express, and MongoDB integration.
