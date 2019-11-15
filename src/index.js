@@ -82,6 +82,7 @@ app.use(async (req, res, next) => {
     // hard-coded + made available for 'routes' (REST methods) later
     // would typically come a JWT in the Authorization header - another day... ;-)
     me: await models.User.findByLogin('gandalf'),
+    tracer,
   };
   next();
 });

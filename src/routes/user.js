@@ -11,34 +11,34 @@ import { Router } from 'express';
 // const rp = wrapRequest(tracer, remoteServiceName);
 
 // Import zipkin stuff #2
-const { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } = require("zipkin");
-const { HttpLogger } = require("zipkin-transport-http");
+// const { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } = require("zipkin");
+// const { HttpLogger } = require("zipkin-transport-http");
 const { wrapRequest } = require('zipkin-instrumentation-request-promise');
 
-const ZIPKIN_ENDPOINT = process.env.ZIPKIN_ENDPOINT || "http://localhost:9411";
+// const ZIPKIN_ENDPOINT = process.env.ZIPKIN_ENDPOINT || "http://localhost:9411";
 
 // Use the Tracer set up once in the main index.js?
 // Get ourselves a zipkin tracer
-const tracer = new Tracer({
-  ctxImpl: new ExplicitContext(),
-  recorder: new BatchRecorder({
-    logger: new HttpLogger({
-      endpoint: `${ZIPKIN_ENDPOINT}/api/v2/spans`,
-      jsonEncoder: jsonEncoder.JSON_V2,
-    }),
-  }),
-  localServiceName: "caprica-service",
-});
+// const tracer = new Tracer({
+//   ctxImpl: new ExplicitContext(),
+//   recorder: new BatchRecorder({
+//     logger: new HttpLogger({
+//       endpoint: `${ZIPKIN_ENDPOINT}/api/v2/spans`,
+//       jsonEncoder: jsonEncoder.JSON_V2,
+//     }),
+//   }),
+//   localServiceName: "caprica-service",
+// });
 
 const remoteServiceName = 'geminon-service';
-const rp = wrapRequest(tracer, remoteServiceName); // use Tracer from main index.js?
 
 /**
  * Modular route for a User.
  */
 const router = Router();
 
-function callAnotherServiceToTestZipkin() {
+function callAnotherServiceToTestZipkin(tracer) {
+  const rp = wrapRequest(tracer, remoteServiceName); // Move so rp only gets created once!
   const options = {
     uri: 'http://localhost:3200/messages',
     qs: {
@@ -68,8 +68,7 @@ function callAnotherServiceToTestZipkin() {
  */
 router.get('/', async (req, res) => {
   const users = await req.context.models.User.find();
-
-  callAnotherServiceToTestZipkin();
+  callAnotherServiceToTestZipkin(req.context.tracer);
   return res.send(users);
 });
 
