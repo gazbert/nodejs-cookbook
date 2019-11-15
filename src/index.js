@@ -6,9 +6,41 @@ import Logger from 'js-logger';
 import models, { connectDb } from './models';
 import routes from './routes';
 
-/**
+// // Zipkin stuff - broken #1
+// const { Tracer } = require('zipkin');
+// const { BatchRecorder } = require('zipkin');
+// const { HttpLogger } = require('zipkin-transport-http');
+// const CLSContext = require('zipkin-context-cls');
+// const ctxImpl = new CLSContext();
+// const recorder = new BatchRecorder({
+//   logger: new HttpLogger({
+//     endpoint: `http://localhost:9411/zipkin/api/v2/spans`
+//   })
+// });
+// const tracer = new Tracer({ ctxImpl, recorder });
+
+// Import zipkin stuff #2
+const { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } = require("zipkin");
+const { HttpLogger } = require("zipkin-transport-http");
+const zipkinMiddleware = require("zipkin-instrumentation-express").expressMiddleware;
+
+const ZIPKIN_ENDPOINT = process.env.ZIPKIN_ENDPOINT || "http://localhost:9411";
+
+// Get ourselves a zipkin tracer
+const tracer = new Tracer({
+  ctxImpl: new ExplicitContext(),
+  recorder: new BatchRecorder({
+    logger: new HttpLogger({
+      endpoint: `${ZIPKIN_ENDPOINT}/api/v2/spans`,
+      jsonEncoder: jsonEncoder.JSON_V2,
+    }),
+  }),
+  localServiceName: "caprica-service",
+});
+
+/********************************************************************
  * This version of the app uses a MongoDB backend and modular routes.
- */
+ ********************************************************************/
 
 // Logging stuff - need to play around with this...
 const log = Logger.get('index.js');
@@ -31,6 +63,9 @@ Logger.setHandler((messages, context) => {
 });
 
 const app = express();
+
+// Zipkin stuff #2
+app.use(zipkinMiddleware({ tracer }));
 
 // 3rd party middleware works at app level - all routes will now have cors headers
 app.use(cors());
@@ -108,6 +143,13 @@ connectDb().then(async () => {
     ]);
   }
   createUsersWithMessages();
+
+  // // Zipkin stuff - broken #1
+  // const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
+  // app.use(zipkinMiddleware({
+  //   tracer,
+  //   serviceName: 'caprica-service' // name of this application
+  // }));
 
   app.listen(process.env.PORT, () =>
     log.log(`Example app listening on port ${process.env.PORT}!`));
