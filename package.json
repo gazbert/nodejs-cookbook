@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "start-stub-nonmod": "nodemon --exec babel-node src/index.stubbed-model-non-modular-routes.js",
-    "start-stub-mod": "nodemon --exec babel-node src/index.stubbed-model-modular-routes.js",    
+    "start-stub-mod": "nodemon --exec babel-node src/index.stubbed-model-modular-routes.js",
     "prod-start": "node src/index.js",
     "lint": "./node_modules/.bin/eslint src/**/*.js",
     "test": "jest"
@@ -14,11 +14,11 @@
   "author": "me",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "eslint": "^6.16.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",

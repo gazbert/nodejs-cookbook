@@ -10,7 +10,7 @@ If you're a Java developer and want to start developing with node.js, you've com
 There are 3 versions of the app that can be run:
 
 1. `npm run start-stub-nonmod` - Run Express app with stubbed model and non-modular routes.
-1. `npm run start-stub-mod` - Runs Express app with stubbed model and modular routes. 
+1. `npm run ` - Runs Express app with stubbed model and modular routes. 
 1. `npm start` - Runs Express app with MongoDB backed model and modular routes.
 
 Call the endpoints, e.g.
@@ -66,6 +66,7 @@ Next, you need to tell which features (presets) of ECMAScript to use:
 
 Create a .babelrc file in project root and add:
 ```
+{
   "presets": [
     "@babel/preset-env"
   ]
